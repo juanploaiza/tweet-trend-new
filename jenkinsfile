@@ -8,7 +8,7 @@ environment {
     stages {
         stage('build') {
             steps {
-                sh '/opt/mvn clean deploy'
+                sh 'mvn clean deploy'
             }
         }
     }
