@@ -12,9 +12,6 @@ environment {
             }
         }
         stage("SonarQube analysis") {
-            environment {
-                scannerHome = tool 'sonar-scanner';
-            }
             steps {
               withSonarQubeEnv(credentialsId: 'sonar-cred', installationName: 'SonarQube') {
                 sh "mvn clean verify sonar:sonar"
