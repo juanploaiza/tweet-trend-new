@@ -8,14 +8,25 @@ environment {
     stages {
         stage('build') {
             steps {
-                sh 'mvn clean deploy'
+                echo "--------- build started --------"
+                sh 'mvn clean deploy -Dmaven.test.skip=true'
+                echo "--------- build completed --------"
+            }
+        }
+        stage('test') {
+            steps {
+                echo "--------- test started --------"
+                sh 'mvn surefire-report:report'
+                echo "--------- test completed --------"
             }
         }
         stage("SonarQube analysis") {
             steps {
+                echo "--------- SonarQube analysis started --------"
               withSonarQubeEnv(credentialsId: 'sonar-cred', installationName: 'SonarQube') {
                 sh "mvn sonar:sonar -Dsonar.projectKey=juanploaiza_demo-workshop"
               }
+                echo "--------- SonarQube analysis completed --------"
             }
           }
     }
