@@ -4,6 +4,7 @@ pipeline {
     }
     environment {
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
+        PROPS = "build.name=ttrend,build.number=${env.BUILD_NUMBER},build.url=${env.BUILD_URL},buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
     }
     tools {
         jfrog 'jfrog-cli'
@@ -44,8 +45,7 @@ pipeline {
         stage("Jar Publish") {
             steps {
                 echo '<--------------- Jar Publish Started --------------->'
-                def properties = 'build.name=ttrend,build.number=${env.BUILD_NUMBER},build.url=${env.BUILD_URL},buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}'
-                jf 'rt u "jarstaging/*" "ttrend-libs-release-local/" --server-id=jfrog --exclude "*.sha1" --exclude "*.md5" --props "${properties}"'
+                jf 'rt u "jarstaging/*" "ttrend-libs-release-local/" --server-id=jfrog --exclude "*.sha1" --exclude "*.md5" --props "${PROPS}"'
                 echo '<--------------- Jar Publish Ended --------------->'
             }
         }
