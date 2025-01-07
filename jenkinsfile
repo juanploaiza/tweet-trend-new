@@ -4,7 +4,6 @@ pipeline {
     }
     environment {
         PATH = "/opt/apache-maven-3.9.9/bin:$PATH"
-        PROPS = "build.name=ttrend,build.number=${env.BUILD_NUMBER},build.url=${env.BUILD_URL},buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
     }
     tools {
         jfrog 'jfrog-cli'
@@ -45,7 +44,7 @@ pipeline {
         stage("Jar Publish") {
             steps {
                 echo '<--------------- Jar Publish Started --------------->'
-                jf 'rt u jarstaging/* ttrend-libs-release-local/ --server-id=jfrog --exclude=*.md5 --exclude=*.sha1'
+                jf 'rt u jarstaging/* ttrend-repo-local/ --exclusions=[\"*.md5\";\"*.sha1\"] --server-id=jfrog'
                 echo '<--------------- Jar Publish Ended --------------->'
             }
         }
