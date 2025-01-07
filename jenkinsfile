@@ -46,22 +46,8 @@ pipeline {
             steps {
                 script {
                         echo '<--------------- Jar Publish Started --------------->'
-                         def server = Artifactory.server "jfrog"
-                         def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
-                         def uploadSpec = """{
-                              "files": [
-                                {
-                                  "pattern": "jarstaging/(*)",
-                                  "target": "ttrend-libs-release-local/{1}",
-                                  "flat": "false",
-                                  "props" : "${properties}",
-                                  "exclusions": [ "*.sha1", "*.md5"]
-                                }
-                             ]
-                         }"""
-                         def buildInfo = server.upload(uploadSpec)
-                         buildInfo.env.collect()
-                         server.publishBuildInfo(buildInfo)
+                         def properties = "build.name=ttrend;build.number=${env.BUILD_NUMBER};build.url=${env.BUILD_URL};buildid=${env.BUILD_ID};commitid=${GIT_COMMIT}";
+                         jf rt u "jarstaging/*" "ttrend-libs-release-local/" --server-id=jfrog --exclude "*.sha1" --exclude "*.md5" --props "${properties}"
                          echo '<--------------- Jar Publish Ended --------------->'  
                 
                 }
