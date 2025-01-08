@@ -44,7 +44,7 @@ pipeline {
         stage("Jar Publish") {
         steps {
                 echo '<--------------- Jar Publish Started --------------->'
-                jf 'rt u jarstaging/(*) ttrend-libs-release-local/{1} --exclusions=\"*.md5;*.sha1\"--server-id=jfrog'
+                jf 'rt u jarstaging/(*) ttrend-libs-release-local/{1} --exclusions=\"*.md5\";\"*.sha1\"--server-id=jfrog'
                 echo '<--------------- Jar Publish Ended --------------->'
          }
         }
