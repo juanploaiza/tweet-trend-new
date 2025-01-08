@@ -44,7 +44,7 @@ pipeline {
         stage("Jar Publish") {
         steps {
             rtUpload (
-                serverId: jfrog,
+                serverId: "jfrog",
                 spec: """{
                         "files": [
                                 {
