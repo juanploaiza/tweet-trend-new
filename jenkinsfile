@@ -45,6 +45,7 @@ pipeline {
             steps {
                 echo '<--------------- Jar Publish Started --------------->'
                 jf 'rt u jarstaging/*.jar ttrend-libs-release-local/ --server-id=jfrog'
+                jf 'rt u jarstaging/*.pom ttrend-libs-release-local/ --server-id=jfrog'
                 echo '<--------------- Jar Publish Ended --------------->'
             }
         }
