@@ -43,18 +43,10 @@ pipeline {
         }
         stage("Jar Publish") {
         steps {
-            rtUpload (
-                serverId: "jfrog",
-                spec: """{
-                        "files": [
-                                {
-                                    "pattern": "jarstaging/(*)",
-                                    "target": "libs-release-local/{1}",
-                                    "excludePatterns": ["**/*.md5", "**/*.sha1"]
-                                }
-                        ]
-                }"""
-             )
+                echo '<--------------- Jar Publish Started --------------->'
+                jf 'rt u jarstaging/(*.jar) ttrend-libs-release-local/{1} --server-id=jfrog'
+                jf 'rt u jarstaging/(*.pom) ttrend-libs-release-local/{1} --server-id=jfrog'
+                echo '<--------------- Jar Publish Ended --------------->'
          }
         }
     }
