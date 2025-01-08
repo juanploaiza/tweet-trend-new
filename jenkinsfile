@@ -42,14 +42,20 @@ pipeline {
           }
         }
         stage("Jar Publish") {
-            steps {
-                echo '<--------------- Jar Publish Started --------------->'
-                sh '''
-                    cd jarstaging
-                    jf rt u com/* ttrend-libs-release-local/ --exclusions=\"*.md5\" --server-id=jfrog
-                '''
-                echo '<--------------- Jar Publish Ended --------------->'
-            }
+        steps {
+            rtUpload (
+                serverId: jfrog,
+                spec: """{
+                        "files": [
+                                {
+                                    "pattern": "jarstaging/(*)",
+                                    "target": "libs-release-local/{1}",
+                                    "excludePatterns": ["**/*.md5", "**/*.sha1"]
+                                }
+                        ]
+                }"""
+             )
+         }
         }
     }
 }
