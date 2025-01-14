@@ -72,5 +72,15 @@ pipeline {
                 }
             }
         }
+        stage ("Deploy") {
+            steps {
+                withCredentials([file(credentialsId: 'jfrog_secret', variable: 'secretFile')]) {
+                    sh 'cat $secretFile > secret.yaml'
+                }
+                script {
+                    sh './deploy.sh'
+                }
+            }
+        }
     }
 }
