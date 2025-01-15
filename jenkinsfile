@@ -74,13 +74,20 @@ pipeline {
         }
         stage ("Deploy") {
             steps {
-                withCredentials([file(credentialsId: 'jfrog_secret', variable: 'secretFile')]) {
-                    sh 'cat $secretFile > secret.yaml'
-                }
                 script {
-                    sh './deploy.sh'
+                    sh 'helm install ttrend ttrend-0.1.0.tgz'
                 }
             }
         }
+        // stage ("Deploy") {
+        //     steps {
+        //         withCredentials([file(credentialsId: 'jfrog_secret', variable: 'secretFile')]) {
+        //             sh 'cat $secretFile > secret.yaml'
+        //         }
+        //         script {
+        //             sh './deploy.sh'
+        //         }
+        //     }
+        // }
     }
 }
